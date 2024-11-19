@@ -719,7 +719,7 @@ zk.ev.on('group-participants.update', async (group) => {
                 console.log("ℹ️Cyberion is connecting...");
             }
             else if (connection === 'open') {
-                console.log("✅Cyberion is Connected to WhatsApp! ☺️");
+                console.log("✅Cyberion is now Connected to WhatsApp! ☺️");
                 console.log("--");
                 await (0, baileys_1.delay)(200);
                 console.log("------");
@@ -769,15 +769,11 @@ zk.ev.on('group-participants.update', async (group) => {
     ┃  📱Mode : 〚${md}〛
     ┃  ⚙️Created on : *23.8.2024*
     ┃  📃Total Commands : ${evt.cm.length}
+    ┃  ✨️App Name: ${herokuAppName}
+    ┃  🔮App Link: (${herokuAppLink})
+    ┃  ☢️ Owner Number: ${botOwner}
     ✰⁠⁠⁠⁠▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰✰
  └─────═━┈┈━═─⊷─⊷═━┈┈━═─────┘
- > HEROKU_BOT_INFO
- ┏━━━━━━━━━━━━━━━━━━━━━━━━┓
- ✫🔧 *Heroku App Configuration*
- ✫App Name: ${herokuAppName}
- ✰ App Link: [Visit Heroku App](${herokuAppLink})
- ✬Owner Number: ${botOwner}
- ┗━━━━━━━━━━━━━━━━━━━━━━━━┛
          *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫* `;                
                 await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
