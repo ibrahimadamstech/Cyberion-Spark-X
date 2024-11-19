@@ -769,12 +769,12 @@ zk.ev.on('group-participants.update', async (group) => {
     ┃  📱Mode : 〚${md}〛
     ┃  ⚙️Created on : *23.8.2024*
     ┃  📃Total Commands : ${evt.cm.length}
-    ┃  ✨️App Name: ${herokuAppName}
-    ┃  🔮App Link: (${herokuAppLink})
-    ┃  ☢️ Owner Number: ${botOwner}
+    ┃  ✨️Bot Name: ${herokuAppName}
+    ┃  🔮url: (${herokuAppLink})
+    ┃  ☢️Owner Number: ${botOwner}
     ✰⁠⁠⁠⁠▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰✰
  └─────═━┈┈━═─⊷─⊷═━┈┈━═─────┘
-         *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫* `;                
+       *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
                 await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
             }
