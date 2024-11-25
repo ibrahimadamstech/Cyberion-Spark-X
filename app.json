@@ -101,9 +101,9 @@
     "NUMERO_OWNER":
   {
     
-    "desc": "Your number , dont put '+' and put you area code(exemple of togo '228')",
+    "desc": "Your number , dont put '+' and put you area code(exemple of togo '228')....Must put the number connected to the session ID",
     "required":false,
-    "value": "254740271632,254770954948"
+    "value": ""
   },
     "WARN_COUNT":
   {
