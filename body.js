@@ -755,12 +755,14 @@ zk.ev.on('group-participants.update', async (group) => {
                 
                 if((conf.DP).toLowerCase() === 'yes') {     
                 let cmsg =` 
-_⁠⁠⁠⁠AI🕳CONNECTED_ ✅️
+╠══════════════════╗
+_⁠⁠⁠⁠BOT🕳CONNECTED_ ✅️
 ╒══════════════════╕
  𝕮𝖄𝕭𝕰𝕽𝕴𝕺𝕹 𝕾𝕻𝕬𝕽𝕶 𝖃
 ╘══════════════════╛
+║ 📍prefix: ${prefixe}
 ║ ✨️Bot Name: ${herokuAppName}
- ${herokuAppLink}
+╠ ${herokuAppLink}
 ║ 😁client Number: ${botOwner}
 ╚══════════════════╝
 ╠FOLLOW OUR CHANNEL
