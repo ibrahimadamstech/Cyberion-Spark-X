@@ -754,8 +754,7 @@ zk.ev.on('group-participants.update', async (group) => {
                 await activateCrons();
                 
                 if((conf.DP).toLowerCase() === 'yes') {     
-
-                let cmsg =` ⁠⁠⁠⁠
+let cmsg =` ⁠⁠⁠⁠
  ╒══════════════════╕
   𝕮𝖄𝕭𝕰𝕽𝕴𝕺𝕹 𝕾𝕻𝕬𝕽𝕶 𝖃
  ╘══════════════════╛
@@ -769,10 +768,12 @@ zk.ev.on('group-participants.update', async (group) => {
  ║  ✨️Bot Name: ${herokuAppName}
  ║  🔮${herokuAppLink}
  ║  ☢️Owner Number: ${botOwner}
- ╘═══════════════════╛  
+ ╘═══════════════════╛ 
+ 
  > 👇Please follow😭🙏💞
  https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
-       *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
+ 
+ *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
                 await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
             }
