@@ -766,12 +766,9 @@ zk.ev.on('group-participants.update', async (group) => {
          ║  ⚙️Created on : *23.8.2024*
          ║  📃Total Commands : ${evt.cm.length}
          ║  ✨️Bot Name: ${herokuAppName}
-         ║  🔮${herokuAppLink}
+          ${herokuAppLink}
          ║  ☢️Owner Number: ${botOwner}
          ╚══════════════════╝ 
-         
-         https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
- 
             *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
              await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
