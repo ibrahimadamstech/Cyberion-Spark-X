@@ -754,24 +754,19 @@ zk.ev.on('group-participants.update', async (group) => {
                 await activateCrons();
                 
                 if((conf.DP).toLowerCase() === 'yes') {     
- let cmsg =` ⁠⁠⁠⁠
+                let cmsg =` 
+_⁠⁠⁠⁠AI🕳CONNECTED_ ✅️
 ╒══════════════════╕
  𝕮𝖄𝕭𝕰𝕽𝕴𝕺𝕹 𝕾𝕻𝕬𝕽𝕶 𝖃
 ╘══════════════════╛
-☆▰▱▰▱▰▱▰▱▰▱▰▱☆
-║ 🕵Creator: *CARLTECH*
-╠──────────────────❂
-║  💫Prefix : 〔${prefixe}〕
-║  📱Mode : 〚${md}〛
-║  ⚙️Created on : *23.8.2024*
-║  📃Total Commands : ${evt.cm.length}
-║  ✨️Bot Name: ${herokuAppName}
+║ ✨️Bot Name: ${herokuAppName}
  ${herokuAppLink}
-║  ☢️Owner Number: ${botOwner}
+║ 😁client Number: ${botOwner}
 ╚══════════════════╝
+╠FOLLOW OUR CHANNEL
 https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
 *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
-             await zk.sendMessage(zk.user.id, { text: cmsg });
+                await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
             }
             else if (connection == "close") {
