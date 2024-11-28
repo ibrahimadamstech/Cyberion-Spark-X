@@ -768,12 +768,12 @@ zk.ev.on('group-participants.update', async (group) => {
          ║  ✨️Bot Name: ${herokuAppName}
          ║  🔮${herokuAppLink}
          ║  ☢️Owner Number: ${botOwner}
-         ╘═══════════════════╛ 
+         ╚══════════════════╝ 
          
- https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
+         https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
  
- *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
-                await zk.sendMessage(zk.user.id, { text: cmsg });
+            *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
+             await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
             }
             else if (connection == "close") {
