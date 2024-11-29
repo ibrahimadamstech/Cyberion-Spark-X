@@ -758,15 +758,22 @@ zk.ev.on('group-participants.update', async (group) => {
 ╠══════════════════╗
 _⁠⁠⁠⁠BOT🕳CONNECTED_ ✅️
 ╒══════════════════╕
-  𝕮𝖄𝕭𝕰𝕽𝕴𝕺𝕹 𝕾𝕻𝕬𝕽𝕶 𝖃
+ ~𝕮𝖄𝕭𝕰𝕽𝕴𝕺𝕹 𝕾𝕻𝕬𝕽𝕶 𝖃~
 ╘══════════════════╛
 ║ 📍prefix: [${prefixe}]
 ║ 📡Bot Name: [${herokuAppName}]
-╠ ${herokuAppLink}
-║ 😁client Number: [${botOwner}]
+🕵  visit your bot
+☆ ${herokuAppLink}
+║ 😁client Number: 
+║ [${botOwner}]
 ╚══════════════════╝
-╠FOLLOW OUR CHANNEL
+
+╠ 🕳FOLLOW OUR CHANNEL👇
+
+
 https://whatsapp.com/channel/0029Vak0genJ93wQXq3q6X3h
+
+
 *𝗖𝗬𝗕𝗘𝗥𝗜𝗢𝗡-𝗦𝗣𝗔𝗥𝗞-𝗫*`;                
                 await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
