@@ -191,6 +191,23 @@ async function downloadMedia(message) {
     }
 }
 
+// Function to download and return media buffer
+async function downloadMedia(message) {
+    const mediaType = Object.keys(message)[0].replace('Message', ''); // Determine the media type
+    const stream = await baileys.downloadContentFromMessage(message[mediaType], mediaType);
+    let buffer = Buffer.from([]);
+
+    try {
+        for await (const chunk of stream) {
+            buffer = Buffer.concat([buffer, chunk]);
+        }
+        return buffer;
+    } catch (error) {
+        console.error('Error downloading media:', error);
+        return null;
+    }
+}
+
 // Function to format notification message
 function createNotification(deletedMessage) {
     const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
@@ -272,6 +289,7 @@ zk.ev.on("messages.upsert", async (m) => {
         }
     }
 });
+
         
         zk.ev.on("messages.upsert", async (m) => {
             const { messages } = m;
