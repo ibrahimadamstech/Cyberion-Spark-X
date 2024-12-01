@@ -174,51 +174,7 @@ if (conf.ADAMS === "yes") {
 }
 
 
-    // Function to download and return media buffer
-async function downloadMedia(message) {
-    const mediaType = Object.keys(message)[0].replace('Message', ''); // Determine the media type
-    const stream = await baileys.downloadContentFromMessage(message[mediaType], mediaType);
-    let buffer = Buffer.from([]);
-
-    try {
-        for await (const chunk of stream) {
-            buffer = Buffer.concat([buffer, chunk]);
-        }
-        return buffer;
-    } catch (error) {
-        console.error('Error downloading media:', error);
-        return null;
-    }
-}
-
-// Function to download and return media buffer
-async function downloadMedia(message) {
-    const mediaType = Object.keys(message)[0].replace('Message', ''); // Determine the media type
-    const stream = await baileys.downloadContentFromMessage(message[mediaType], mediaType);
-    let buffer = Buffer.from([]);
-
-    try {
-        for await (const chunk of stream) {
-            buffer = Buffer.concat([buffer, chunk]);
-        }
-        return buffer;
-    } catch (error) {
-        console.error('Error downloading media:', error);
-        return null;
-    }
-}
-
-// Function to format notification message
-function createNotification(deletedMessage) {
-    const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-    let notification = `*[ANTIDELETE DETECTED]*\n\n`;
-    notification += `*Time:* ${new Date().toLocaleString()}\n`;
-    notification += `*Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
-
-    return notification;
-}
-
-// Event listener for all incoming messages
+    // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async (m) => {
     // Check if ANTIDELETE is enabled
     if (conf.ADM === "yes") {
