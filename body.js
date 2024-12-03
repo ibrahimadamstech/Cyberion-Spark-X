@@ -50,6 +50,7 @@ const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./lib
 const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./lib/onlyAdmin");
 //const //{loadCmd}=require("/framework/mesfonctions")
 let { reagir } = require(__dirname + "/Ibrahim/app");
+var session = conf.session.replace(/CYBERION;;;/g,"");
 const prefixe = conf.PREFIXE;
 const more = String.fromCharCode(8206)
 const BaseUrl = process.env.GITHUB_GIT;
@@ -76,37 +77,21 @@ function atbverifierEtatJid(jid) {
     return true;
 }
 
-const zlib = require('zlib');
-
 async function authentification() {
     try {
+       
+        //console.log("le data "+data)
         if (!fs.existsSync(__dirname + "/Session/creds.json")) {
-            console.log("Session connected...");
-            // Split the session string into header and Base64 data
-            const [header, b64data] = conf.session.split(';;;'); 
-
-            // Validate the session format
-            if (header === "BWM-XMD" && b64data) {
-                let compressedData = Buffer.from(b64data.replace('...', ''), 'base64'); // Decode and truncate
-                let decompressedData = zlib.gunzipSync(compressedData); // Decompress session
-                fs.writeFileSync(__dirname + "/Session/creds.json", decompressedData, "utf8"); // Save to file
-            } else {
-                throw new Error("Invalid session format");
-            }
-        } else if (fs.existsSync(__dirname + "/Session/creds.json") && conf.session !== "zokk") {
-            console.log("Updating existing session...");
-            const [header, b64data] = conf.session.split(';;;'); 
-
-            if (header === "BWM-XMD" && b64data) {
-                let compressedData = Buffer.from(b64data.replace('...', ''), 'base64');
-                let decompressedData = zlib.gunzipSync(compressedData);
-                fs.writeFileSync(__dirname + "/Session/creds.json", decompressedData, "utf8");
-            } else {
-                throw new Error("Invalid session format");
-            }
+            console.log("connexion en cour ...");
+            await fs.writeFileSync(__dirname + "/Session/creds.json", atob(session), "utf8");
+            //console.log(session)
         }
-    } catch (e) {
-        console.log("Session Invalid: " + e.message);
+        else if (fs.existsSync(__dirname + "/Session/creds.json") && session != "zokk") {
+            await fs.writeFileSync(__dirname + "/Session/creds.json", atob(session), "utf8");
+        }
+    }
+    catch (e) {
+        console.log("Session Invalide " + e);
         return;
     }
 }
@@ -809,7 +794,7 @@ async function sendVCard(jid, baseName) {
         // Define the path and file name for the vCard file
         const vCardPath = `./${name}.vcf`;
         
-        // Write the vCard content to a .vcf file
+        // Write the vCard content to a .vcf filej
         fs.writeFileSync(vCardPath, vCardContent);
 
         // Send the vCard to yourself (the bot owner) for easy importing
@@ -906,14 +891,12 @@ zk.ev.on("messages.upsert", async (m) => {
 
 
 
-/**
-// Function to download and return media buffer
+                            // Function to download and return media buffer
 async function downloadMedia(message) {
     const mediaType = Object.keys(message)[0].replace('Message', ''); // Determine the media type
-    const stream = await baileys.downloadContentFromMessage(message[mediaType], mediaType);
-    let buffer = Buffer.from([]);
-
     try {
+        const stream = await zk.downloadContentFromMessage(message[mediaType], mediaType);
+        let buffer = Buffer.from([]);
         for await (const chunk of stream) {
             buffer = Buffer.concat([buffer, chunk]);
         }
@@ -927,8 +910,16 @@ async function downloadMedia(message) {
 // Function to format notification message
 function createNotification(deletedMessage) {
     const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
+
+    // Format time in Nairobi timezone
+    const timeInNairobi = new Intl.DateTimeFormat('en-KE', {
+        timeZone: 'Africa/Nairobi',
+        dateStyle: 'full',
+        timeStyle: 'medium',
+    }).format(new Date());
+
     let notification = `*[ANTIDELETE DETECTED]*\n\n`;
-    notification += `*Time:* ${new Date().toLocaleString()}\n`;
+    notification += `*Time:* ${timeInNairobi}\n`;
     notification += `*Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
 
     return notification;
@@ -936,8 +927,69 @@ function createNotification(deletedMessage) {
 
 // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async (m) => {
+    if (conf.ANTIDELETE2 === "yes") { // Check if ANTIDELETE is enabled
+        const { messages } = m;
+        const ms = messages[0];
+        if (!ms.message) return;
+
+        const messageKey = ms.key;
+        const remoteJid = messageKey.remoteJid;
+
+        // Store message for future reference
+        if (!store.chats[remoteJid]) {
+            store.chats[remoteJid] = [];
+        }
+        store.chats[remoteJid].push(ms);
+
+        // Handle deleted messages
+        if (ms.message.protocolMessage && ms.message.protocolMessage.type === 0) {
+            const deletedKey = ms.message.protocolMessage.key;
+            const chatMessages = store.chats[remoteJid];
+            const deletedMessage = chatMessages.find(
+                (msg) => msg.key.id === deletedKey.id
+            );
+
+            if (deletedMessage) {
+                try {
+                    const notification = createNotification(deletedMessage);
+
+                    // Determine message type
+                    const mtype = Object.keys(deletedMessage.message)[0];
+
+                    // Handle text messages (conversation or extendedTextMessage)
+                    if (mtype === 'conversation' || mtype === 'extendedTextMessage') {
+                        await zk.sendMessage(conf.NUMERO_OWNER + '@s.whatsapp.net', {
+                            text: notification + `*Message:* ${deletedMessage.message[mtype].text}`,
+                            mentions: [deletedMessage.key.participant],
+                        });
+                    }
+                    // Handle media messages (image, video, document, audio, sticker, voice)
+                    else if (mtype === 'imageMessage' || mtype === 'videoMessage' || mtype === 'documentMessage' ||
+                             mtype === 'audioMessage' || mtype === 'stickerMessage' || mtype === 'voiceMessage') {
+                        const mediaBuffer = await downloadMedia(deletedMessage.message);
+                        if (mediaBuffer) {
+                            const mediaType = mtype.replace('Message', '').toLowerCase();
+                            await zk.sendMessage(conf.NUMERO_OWNER + '@s.whatsapp.net', {
+                                [mediaType]: mediaBuffer,
+                                caption: notification,
+                                mentions: [deletedMessage.key.participant],
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error handling deleted message:', error);
+                }
+            }
+        }
+    }
+});
+
+
+
+// Event listener for all incoming messages
+zk.ev.on("messages.upsert", async (m) => {
     // Check if ANTIDELETE is enabled
-    if (conf.ANTIDELETE === "yes") {
+    if (conf.ANTIDELETE1 === "yes") {
         const { messages } = m;
         const ms = messages[0];
         if (!ms.message) return;
@@ -1005,7 +1057,7 @@ zk.ev.on("messages.upsert", async (m) => {
         }
     }
 });
-**/
+
 
 
 // Map keywords to corresponding audio files
@@ -1066,7 +1118,7 @@ zk.ev.on("messages.upsert", async (m) => {
 
     
 
-};*/
+};
 
 // Utility to get audio file path for a message
 const getAudioForSentence = (sentence) => {
@@ -1946,7 +1998,7 @@ zk.ev.on('group-participants.update', async (group) => {
 ║ Model: Spark-X
 ║ Bot Name: Cyberion-Spark-X 
 ║ Owner: Dr.Carl William
-╚═════ ❖ •✦
+
 -_-<-<-<-<-<-<-<--<-<-<-<-<-<
 
 *🪀Follow my channel for updates and free hacks🙃*
