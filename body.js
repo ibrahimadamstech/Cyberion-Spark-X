@@ -918,7 +918,7 @@ function createNotification(deletedMessage) {
         timeStyle: 'medium',
     }).format(new Date());
 
-    let notification = `*[ANTIDELETE DETECTED]*\n\n`;
+    let notification = `*[ANTIDELETE MESSAGE DETECTED]*\n\n`;
     notification += `*Time:* ${timeInNairobi}\n`;
     notification += `*Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
 
