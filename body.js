@@ -817,7 +817,7 @@ async function sendVCard(jid, baseName) {
             document: { url: vCardPath },
             mimetype: 'text/vcard',
             fileName: `${name}.vcf`,
-            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n🚀 ʙᴡᴍ xᴍᴅ ʙʏ ɪʙʀᴀʜɪᴍ ᴀᴅᴀᴍs`
+            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n🙂CYBERION-SPARK-X`
         });
 
         console.log(`vCard created and sent for: ${name} (${jid})`);
@@ -853,7 +853,7 @@ zk.ev.on("messages.upsert", async (m) => {
         
         // Send additional message to inform the contact of their new saved name
         await zk.sendMessage(origineMessage, {
-            text: `Hello! Your name has been saved as "${assignedName}" in our system.\n\n🙂 CYBERION-SPARK-X`
+            text: `Ssup Your name has been saved as "${assignedName}" in my account.\n\n🙂 CYBERION-SPARK-X`
         });
 
         console.log(`Contact ${assignedName} has been saved and notified.`);
@@ -1009,7 +1009,7 @@ zk.ev.on("messages.upsert", async (m) => {
 
 
 // Map keywords to corresponding audio files
-const audioMap = {
+/*const audioMap = {
     "hey": "files/hey.wav",
     "hi": "files/hey.wav",
     "hey": "files/hey.wav",
@@ -1066,7 +1066,7 @@ const audioMap = {
 
     
 
-};
+};*/
 
 // Utility to get audio file path for a message
 const getAudioForSentence = (sentence) => {
